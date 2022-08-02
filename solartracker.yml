@@ -309,7 +309,7 @@ sensor:
     update_interval: 30000ms
 
 ota:
-  password: "e6e24ea864d6ed13a2b9033045c6de55"
+  password: !secret ota_password
 
 wifi:
   ssid: !secret wifi_ssid
