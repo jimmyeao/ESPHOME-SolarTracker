@@ -119,6 +119,7 @@ sensor:
             send_every: 1   
          - delta: 1
          - throttle: 2s
+# We dont need the below, so have been commented out         
 #    gyro_x:
 #      name: "gyro X"
 #      filters:
@@ -175,6 +176,7 @@ sensor:
             send_every: 1   
          - delta: 1
          - throttle: 2s
+# We dont need the below, so have been commented out         
 #    gyro_x:
 #      name: "pan2gyro X"
 #      filters:
@@ -231,6 +233,7 @@ sensor:
             send_every: 1   
          - delta: 1
          - throttle: 2s
+# We dont need the below, so have been commented out         
  #   gyro_x:
 #      name: "pan3gyro X"
 #      filters:
