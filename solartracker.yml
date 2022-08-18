@@ -10,17 +10,6 @@ i2c:
   scl: GPIO22
   scan: true
   id: i2c0
-tca9548a:
-  - address: 0x70
-    id: multiplex0
-    i2c_id: i2c0
-    channels:
-      - bus_id: multiplex0channel0
-        channel: 0
-      - bus_id: multiplex0channel1
-        channel: 1
-      - bus_id: multiplex0channel2
-        channel: 5
 time:
   - platform: homeassistant  
     id: homeassistant_time
@@ -43,44 +32,44 @@ api:
 switch:
   - platform: gpio
     name: "Relay 1"
-    pin: GPIO12
+    pin: GPIO32
     id: relay1
-    interlock: [relay2]
+    interlock: [relay2,relay3,relay4,relay5,relay6]
     interlock_wait_time: 1s
     restore_mode: ALWAYS_OFF
   - platform: gpio
     name: "Relay 2"
     pin: GPIO14
     id: relay2
-    interlock: [relay1]
+    interlock: [relay1,relay3,relay4,relay5,relay6]
     interlock_wait_time: 1s
     restore_mode: ALWAYS_OFF
   - platform: gpio
     name: "Relay 3"
     pin: GPIO27
     id: relay3
-    interlock: [relay4]
+    interlock: [relay2,relay1,relay4,relay5,relay6]
     interlock_wait_time: 1s
     restore_mode: ALWAYS_OFF
   - platform: gpio
     name: "Relay 4"
     pin: GPIO26
     id: relay4
-    interlock: [relay3]
+    interlock: [relay2,relay3,relay1,relay5,relay6]
     interlock_wait_time: 1s
     restore_mode: ALWAYS_OFF
   - platform: gpio
     name: "Relay 5"
     pin: GPIO25
     id: relay5
-    interlock: [relay6]
+    interlock: [relay2,relay3,relay4,relay1,relay6]
     interlock_wait_time: 1s
     restore_mode: ALWAYS_OFF
   - platform: gpio
     name: "Relay 6"
     pin: GPIO33
     id: relay6
-    interlock: [relay5]
+    interlock: [relay2,relay3,relay4,relay5,relay1]
     interlock_wait_time: 1s
     restore_mode: ALWAYS_OFF
 sensor:
@@ -90,220 +79,6 @@ sensor:
   - platform: sun
     name: Sun Azimuth
     type: azimuth
-  - platform: mpu6050
-    i2c_id: multiplex0channel1
-    accel_x:
-      id: accel_x
-      name: "accel X"
-      filters:
-         - sliding_window_moving_average:
-            window_size: 5
-            send_every: 1
-         - delta: 1
-         - throttle: 2s
-    accel_y:
-      id: accel_y    
-      name: "accel Y"
-      filters:
-         - sliding_window_moving_average:
-            window_size: 4
-            send_every: 1   
-         - delta: 1
-         - throttle: 2s
-    accel_z:
-      id: accel_z    
-      name: "accel z"
-      filters:
-         - sliding_window_moving_average:
-            window_size: 4
-            send_every: 1   
-         - delta: 1
-         - throttle: 2s
-# We dont need the below, so have been commented out         
-#    gyro_x:
-#      name: "gyro X"
-#      filters:
-#         - sliding_window_moving_average:
-#            window_size: 4
-#            send_every: 1   
-#         - delta: 1
-#         - throttle: 2s
-#    gyro_y:
-#      name: "gyro Y"
-#      filters:
-#         - sliding_window_moving_average:
-#            window_size: 4
-#            send_every: 1     
-#         - delta: 1
-#         - throttle: 2s
-#    gyro_z:
-#      name: "gyro z"
-#      filters:
-#         - sliding_window_moving_average:
-#            window_size: 4
-#            send_every: 1      
-#         - delta: 1
-#         - throttle: 2s
-    temperature:
-      name: "MPU6050 Temperature"
-    update_interval: 1.5s
-  - platform: mpu6050
-    i2c_id: multiplex0channel0
-    accel_x:
-      id: pan2accel_x
-      name: "pan2accel X"
-      filters:
-         - sliding_window_moving_average:
-            window_size: 5
-            send_every: 1
-         - delta: 1
-         - throttle: 2s
-    accel_y:
-      id: pan2accel_y    
-      name: "pan2accel Y"
-      filters:
-         - sliding_window_moving_average:
-            window_size: 4
-            send_every: 1   
-         - delta: 1
-         - throttle: 2s
-    accel_z:
-      id: pan2accel_z    
-      name: "pan2accel z"
-      filters:
-         - sliding_window_moving_average:
-            window_size: 4
-            send_every: 1   
-         - delta: 1
-         - throttle: 2s
-# We dont need the below, so have been commented out         
-#    gyro_x:
-#      name: "pan2gyro X"
-#      filters:
-#         - sliding_window_moving_average:
-#            window_size: 4
-#            send_every: 1   
-#         - delta: 1
-#         - throttle: 2s
-#    gyro_y:
-#      name: "pan2gyro Y"
-#      filters:
-#         - sliding_window_moving_average:
-#            window_size: 4
-#            send_every: 1     
-#         - delta: 1
-#         - throttle: 2s
-#    gyro_z:
-#      name: "pan2gyro z"
-#      filters:
-#         - sliding_window_moving_average:
-#            window_size: 4
-#            send_every: 1      
-#         - delta: 1
-#         - throttle: 2s
-    temperature:
-      name: "pan2MPU6050 Temperature"
-    update_interval: 1.5s    
-  - platform: mpu6050
-    i2c_id: multiplex0channel2
-    accel_x:
-      id: pan3accel_x
-      name: "pan3accel X"
-      filters:
-         - sliding_window_moving_average:
-            window_size: 5
-            send_every: 1
-         - delta: 1
-         - throttle: 2s
-    accel_y:
-      id: pan3accel_y    
-      name: "pan3accel Y"
-      filters:
-         - sliding_window_moving_average:
-            window_size: 4
-            send_every: 1   
-         - delta: 1
-         - throttle: 2s
-    accel_z:
-      id: pan3accel_z    
-      name: "pan3accel z"
-      filters:
-         - sliding_window_moving_average:
-            window_size: 4
-            send_every: 1   
-         - delta: 1
-         - throttle: 2s
-# We dont need the below, so have been commented out         
- #   gyro_x:
-#      name: "pan3gyro X"
-#      filters:
-#         - sliding_window_moving_average:
-#            window_size: 4
-#            send_every: 1   
-#         - delta: 1
-#         - throttle: 2s
-#    gyro_y:
-#      name: "pan3gyro Y"
-#      filters:
-#         - sliding_window_moving_average:
-#            window_size: 4
-#            send_every: 1     
-#         - delta: 1
-#         - throttle: 2s
-#    gyro_z:
-#      name: "pan3gyro z"
-#      filters:
-#         - sliding_window_moving_average:
-#            window_size: 4
-#            send_every: 1      
-#         - delta: 1
-#         - throttle: 2s
-    temperature:
-      name: "pan3MPU6050 Temperature"
-    update_interval: 10.5s        
-  - platform: template
-    id: roll
-    name: roll
-    accuracy_decimals: 2
-    lambda: |-
-      return  (atan( id(accel_y).state / sqrt( pow( id(accel_x).state , 2) + pow( id(accel_z).state , 2) ) ) * 180 / PI) ;
-    update_interval: 250ms
-  - platform: template
-    id: pan2roll
-    name: pan2roll
-    accuracy_decimals: 2
-    lambda: |-
-      return  (atan( id(pan2accel_y).state / sqrt( pow( id(pan2accel_x).state , 2) + pow( id(pan2accel_z).state , 2) ) ) * 180 / PI) ;
-    update_interval: 250ms
-
-  - platform: template
-    id: pan2pitch
-    name: pan2pitch
-    accuracy_decimals: 2
-    lambda: |-
-      return  (atan(-1 * id(pan2accel_x).state / sqrt(pow(id(pan2accel_y).state, 2) + pow(id(pan2accel_z).state, 2))) * 180 / PI);
-    update_interval: 250ms  
-  - platform: template
-    id: pitch
-    name: pitch
-    accuracy_decimals: 2
-    lambda: |-
-      return  (atan(-1 * id(accel_x).state / sqrt(pow(id(accel_y).state, 2) + pow(id(accel_z).state, 2))) * 180 / PI);
-    update_interval: 250ms 
-  - platform: template
-    id: pan3pitch
-    name: pan3pitch
-    accuracy_decimals: 2
-    lambda: |-
-      return  (atan(-1 * id(pan3accel_x).state / sqrt(pow(id(pan3accel_y).state, 2) + pow(id(pan3accel_z).state, 2))) * 180 / PI);
-    update_interval: 250ms  
-  - platform: template
-    id: pan3roll
-    name: pan3roll
-    accuracy_decimals: 2
-    lambda: |-
-      return  (atan( id(pan3accel_y).state / sqrt( pow( id(pan3accel_x).state , 2) + pow( id(pan3accel_z).state , 2) ) ) * 180 / PI) ;
-    update_interval: 250ms    
   - platform: template
     id: target_panel_elevation
     name: "Targer Panel elevation"
